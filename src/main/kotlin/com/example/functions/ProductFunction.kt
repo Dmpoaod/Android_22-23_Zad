@@ -2,7 +2,6 @@ package com.example.functions
 
 import com.example.models.Product
 import com.example.models.Products
-import com.example.models.isValid
 import isValid
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction

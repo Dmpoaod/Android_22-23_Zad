@@ -57,6 +57,8 @@ dependencies {
     implementation("io.ktor:ktor-client-okhttp-jvm:2.0.0-eap-256")
     implementation("io.ktor:ktor-client-js:2.0.0-eap-256")
     implementation("io.ktor:ktor-client-core-jvm:2.0.0-eap-256")
+    implementation("org.testng:testng:7.1.0")
+    implementation("org.testng:testng:7.1.0")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("org.slf4j:slf4j-simple:2.0.5")

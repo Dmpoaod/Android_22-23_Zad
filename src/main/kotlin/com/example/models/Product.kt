@@ -40,6 +40,8 @@ object Products : Table() {
 
 }
 
+//zad 7
+
 fun parseProduct(json: String): Product {
     val jsonObject = Json.parse(json).jsonObject
     val product = Product(

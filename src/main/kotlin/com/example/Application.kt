@@ -1,8 +1,13 @@
 package com.example
 
+import com.example.models.Product
 import com.example.models.User
 import com.example.plugins.*
+import com.google.api.services.storage.model.Notifications
 import config.firebase.FirebaseAdmin
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
@@ -45,17 +50,17 @@ fun Application.main() {
     configureRouting()
 
 
-//    val client = HttpClient() {
-//        install(Notifications) {
-//            onSuccess { call ->
-//                val product = call.response.receive<Product>()
-//            }
-//        }
-//    }
-//    val newProducts = client.get("https://your-server.com/new-products").body<List>()
-//    for (product in newProducts) {
-//        PushNotifications.start(getApplicationContext(), "Nowy Produkt: $product");
-//    }
-//    client.close()
+    val client = HttpClient() {
+        install(Notifications) {
+            onSuccess { call ->
+                val product = call.response.receive<Product>()
+            }
+        }
+    }
+    val newProducts = client.get("https://your-server.com/new-products").body<List>()
+    for (product in newProducts) {
+        PushNotifications.start(getApplicationContext(), "Nowy Produkt: $product");
+    }
+    client.close()
 }
 

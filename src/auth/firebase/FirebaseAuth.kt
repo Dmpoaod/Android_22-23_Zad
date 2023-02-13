@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 
 private val firebaseAuthLogger: Logger = LoggerFactory.getLogger("io.robothouse.auth.firebase")
 
-class FirebaseAuthenticationProvider internal constructor(config: Configuration) : AuthenticationProvider(config) {
+open class FirebaseAuthenticationProvider internal constructor(config: Configuration) : FirebaseAuthenticationProvider(config) {
 
     internal val token: (ApplicationCall) -> String? = config.token
     internal val principle: ((uid: String) -> Principal?)? = config.principal
@@ -23,7 +23,7 @@ class FirebaseAuthenticationProvider internal constructor(config: Configuration)
         internal fun build() = FirebaseAuthenticationProvider(this)
     }
 
-    override suspend fun onAuthenticate(context: AuthenticationContext) {
+    suspend fun onAuthenticate(context: AuthenticationContext) {
         TODO("Not yet implemented")
     }
 }
