@@ -2,18 +2,22 @@ package com.example.functions
 
 import com.example.models.Product
 import com.example.models.Products
-import com.google.gson.Gson
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
 import isValid
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.JsonNull.content
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import io.ktor.serialization.gson.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.server.plugins.contentnegotiation.*
+
 
 fun getProduct(id: Int): Product? {
     val product = transaction {
@@ -58,23 +62,23 @@ fun deleteProduct(id: Int) {
 
 //Zad 7
 suspend fun downloadProduct() {
-    val products = mutableListOf<Product>()
-    runBlocking {
-        val httpClient = HttpClient {
-            install(ContentNegotiation) {
-               gson()
+
+    val client = HttpClient {
+        install(ContentNegotiation) {
+            gson()
+        }
+    }
+
+    val products: List<Product> = client.get("http://localhost:8080/products")
+
+            for (i in products) {
+                addProduct(i)
             }
-        }
-        val response: HttpResponse = httpClient.get {
-            url("https://example.com/products")
-            contentType(ContentType.Application.Json)
-        }
-        val responseBody: String = response.bodyAsText()
-        val productsResponse = Gson().fromJson(responseBody, Array<Product>::class.java)
-        products.addAll(productsResponse)
-    }
-    for (i in products) {
-        addProduct(i)
-    }
+
+            client.close()
+
+
+
+
 }
 

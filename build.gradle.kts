@@ -66,6 +66,12 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-core", "0.38.1")
     implementation("org.jetbrains.exposed", "exposed-jdbc", "0.38.1")
     implementation("org.jetbrains.exposed", "exposed-dao", "0.38.1")
+    implementation ("io.ktor:ktor-server-netty:1.6.5")
+    implementation ("io.ktor:ktor-gson:1.6.5")
+    implementation ("io.ktor:ktor-locations:1.6.5")
+    implementation ("io.ktor:ktor-server-core:1.6.5")
+    implementation ("io.ktor:ktor-client-content-negotiation:1.6.5")
+    implementation ("io.ktor.features.ContentNegotiation:1.6.5")
 
 }
 
