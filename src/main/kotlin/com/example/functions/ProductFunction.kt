@@ -4,19 +4,12 @@ import com.example.models.Product
 import com.example.models.Products
 import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.server.application.*
 import isValid
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import io.ktor.serialization.gson.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.server.plugins.contentnegotiation.*
+
 
 
 fun getProduct(id: Int): Product? {
@@ -60,13 +53,11 @@ fun deleteProduct(id: Int) {
     }
 }
 
-//Zad 7
+
 suspend fun downloadProduct() {
 
     val client = HttpClient {
-        install(ContentNegotiation) {
-            gson()
-        }
+        install(ContentNegotiation) { gson { setPrettyPrinting() } }
     }
 
     val products: List<Product> = client.get("http://localhost:8080/products")
@@ -76,9 +67,6 @@ suspend fun downloadProduct() {
             }
 
             client.close()
-
-
-
 
 }
 

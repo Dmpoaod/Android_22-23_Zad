@@ -4,9 +4,11 @@ package com.example.plugins
 import com.example.functions.PaymentData
 import com.example.functions.mockPayment
 import com.example.models.Product
+import com.example.models.User
 import com.google.gson.Gson
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import main.productList
@@ -22,6 +24,7 @@ fun Application.configureRouting() {
             )
             var gson = Gson()
             call.respondText(gson.toJson(x))
+            call.respond(HttpStatusCode.OK, "I'm working just fine, thanks!")
         }
 
             get("/products") {
@@ -38,6 +41,13 @@ fun Application.configureRouting() {
                 call.respondText("Payment failed.")
             }
         }
+
+            authenticate {
+                get("/authenticated") {
+                    call.respond(HttpStatusCode.OK, "My name is ${call.principal<User>()?.name}, and I'm authenticated!")
+                }
+            }
+
     }
 }
 
